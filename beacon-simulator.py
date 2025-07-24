@@ -27,6 +27,7 @@ data = "a"
 interval = args.interval
 variance = args.jitter
 jitter = random.randint(interval - variance, interval + variance)
+max_count = args.max_count
 
 def tcp_beacon():
     count = 0
