@@ -7,6 +7,7 @@
 # Note: the payload _is never sent_ if using TCP and the remote port is closed.
 
 import socket, time, random, argparse
+import sys
 
 parser = argparse.ArgumentParser(description="Example command: 'python3 .\\beacon-simulator.py -ip 192.168.0.5 -p 2000 -i 10 -j 3 -m 1024' or 'python3 .\\beacon-simulator.py -ip 192.168.0.5 -p 2000 --interval 120 --jitter 12 --max_payload 1024 --tcp'")
 parser.add_argument("-ip", dest="ip", type=str, help="Use -ip in order to set your target IP address.", required=True)
@@ -16,6 +17,7 @@ parser.add_argument("-j", "--jitter", type=int, dest="jitter", help="Use -j to s
 parser.add_argument("--tcp", dest="tcp", action="store_true", help="Use -t to select the tcp protocol. This is optional and TCP is default.", required=False)
 parser.add_argument("--udp", dest="udp", action="store_true", help="Use -u to select the udp protocol. This is optional and TCP is default.", required=False)
 parser.add_argument("-m", "--max_payload", type=int, dest="max_payload", help="Use -m to set a maximum payload size.", required=True)
+parser.add_argument("-n", "--max_count", type=int, dest="max_count", help="Use -n to set maximum number of beacons sent.", required=False)
 args = parser.parse_args()
 
 server_ip = args.ip
@@ -41,6 +43,8 @@ def tcp_beacon():
         client_tcp.close()
         count = count +1
         print("Number of beacons sent: ",count)
+        if count >= max_count:
+            sys.exit()
         time.sleep(jitter)
 
 def udp_beacon():
