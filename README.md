@@ -30,6 +30,12 @@ For the majority of users, `beacon-simulator.py` and `simple-listener.sh` will b
 ## Example Setup
 This guide will walk you through setting up a C2 channel with `simple-listener.sh` running on the device acting as the server and `beacon-simulator.py` running on the device acting as the compromised client system.
 
+### Writing network traffic data to a file
+To write the traffic data to a file you need `tcpdump` installed on your system. Suppose you want to write to a file named `capture.pcap`, run the following before you start the server:
+```python
+sudo tcpdump -i any port 9000 -w capture.pcap
+```
+
 ### Setting up the Server
 1. Clone this repository onto the server.
 1. Install `ncat` if it is not already installed. (While `simple-listener.sh` can run with `netcat` and `nc`, it may have issues with UDP timeouts.)
